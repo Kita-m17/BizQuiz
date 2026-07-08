@@ -263,58 +263,95 @@
     <body>
         <div id="game-container">
 
-            <!-- SCREEN 1: Splash/Start Screen -->
+            <!-- SCREEN 1: Splash -->
             <div id="splash-screen" class="screen active">
-                <p style="color: var(--accent); padding-top: 40vh; text-align: center;">
-                    <!-- hero image-->
-                    <img 
-                        src="images/splash-hero.png" 
-                        alt="M-Pesa BizQuiz — Answer. Learn. Grow." 
-                        class="splash-hero-img"
-                    >
-                
+ 
+                <!-- LAYER 1: Background image (fills entire screen) -->
+                <img
+                    src="images/splash-hero.png"
+                    alt="M-Pesa BizQuiz — Answer. Learn. Grow."
+                    class="splash-bg"
+                >
+ 
+                <!-- LAYER 2: Ambient breathing glow -->
+                <div class="splash-ambient"></div>
+ 
+                <!-- LAYER 3: Glow under bar chart -->
+                <div class="splash-chart-glow"></div>
+ 
+                <!-- LAYER 4: Animated glowing arrow (SVG) -->
+                <div class="splash-arrow">
+                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="arrowGrad" x1="0" x2="1">
+                            <stop offset="0%" stop-color="#8CFF73"/>
+                            <stop offset="100%" stop-color="#E8FFC5"/>
+                            </linearGradient>
+                        </defs>
+                        <polyline
+                            points="20,160 70,110 105,125 145,70"
+                            fill="none"
+                            stroke="url(#arrowGrad)"
+                            stroke-width="12"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+                        <polygon points="145,70 145,98 182,52" fill="#E8FFC5"/>
+                    </svg>
+                </div>
+ 
+                <!-- LAYER 5: UI (button + features) at the bottom -->
+                <div class="splash-ui">
                     <button class="splash-start-btn" onclick="startGame()">
-                        Start game &nbsp; >
+                    Start game &nbsp; ›
                     </button>
-
-                    <!-- Three feature icons at bottom -->
+            
                     <div class="splash-features">
-                        <div class="splash-feature">
-                            <div class="splash-feature-icon">🏆</div>
-                            <div class="splash-feature-title">Quiz</div>
-                            <div class="splash-feature-sub">your knowledge</div>
-                        </div>
-
-                        <div class="splash-feature">
-                            <div class="splash-feature-icon">📈</div>
-                            <div class="splash-feature-title">Earn points</div>
-                            <div class="splash-feature-sub">climb the ranks</div>
-                        </div>
-
-                        <div class="splash-feature">
-                            <div class="splash-feature-icon">📱</div>
-                            <div class="splash-feature-title">Powered by</div>
-                            <div class="splash-feature-sub">M-Pesa</div>
-                        </div>
+                    <div class="splash-feature">
+                        <div class="splash-feature-icon">🏆</div>
+                        <div class="splash-feature-title">Quiz</div>
+                        <div class="splash-feature-sub">your knowledge</div>
                     </div>
-
-                </p>
+                    <div class="splash-feature">
+                        <div class="splash-feature-icon">📈</div>
+                        <div class="splash-feature-title">Earn points</div>
+                        <div class="splash-feature-sub">climb the ranks</div>
+                    </div>
+                    <div class="splash-feature">
+                        <div class="splash-feature-icon">📱</div>
+                        <div class="splash-feature-title">Powered by</div>
+                        <div class="splash-feature-sub">M-Pesa</div>
+                    </div>
+                    </div>
+                </div>
+            
             </div>
-
+ 
             <!-- SCREEN 2: Main gameplay -->
             <div id="game-screen" class="screen">
                 <p style="color: var(--accent); padding-top: 40vh; text-align: center;">
                     Game screen goes here (Steps 3-6)
                 </p>
             </div>
-
+ 
             <!-- SCREEN 3: End / Results -->
             <div id="end-screen" class="screen">
                 <p style="color: var(--accent); padding-top: 40vh; text-align: center;">
                     End screen goes here (Step 9)
                 </p>
             </div>
+ 
         </div>
-
+ 
+        <script>
+            function showScreen(screenId) {
+                document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+                document.getElementById(screenId).classList.add('active');
+            }
+        
+            function startGame() {
+                showScreen('game-screen');
+            }
+        </script>
     </body>
 </html>
