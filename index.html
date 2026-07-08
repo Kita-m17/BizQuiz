@@ -76,105 +76,183 @@
             }
 
             /*splash screen*/
-
-            /* Splash Layout */
             #splash-screen {
-                justify-content: center;
+                position: relative;
+                justify-content: flex-end;  /* push button & features to bottom */
                 align-items: center;
                 text-align: center;
-                padding: 2rem 1.5rem;
-                position: relative;
-            }
-
-            /*Hero Image*/
-            .splash-hero-img {
-                max-width: 100%;
-                height: auto;
-                margin-bottom: 2rem;
-                position: relative;
-                z-index: 1;
-            }
-
-            /* start button */
-            .splash-start-btn {
-                background: linear-gradient(180deg, #00E676 0%, #00A844 100%);
-                color: #000;
-                font-size: 20px;
-                font-weight: 800;
-                letter-spacing: 3px;
-                text-transform: uppercase;
-                padding: 1.1rem 3.5rem;
-                border: none;
-                border-radius: 50px;
-                cursor: pointer;
-                position: relative;
-                z-index: 1;
-                box-shadow:
-                    0 4px 20px rgba(0, 200, 83, 0.4),
-                    0 0 40px rgba(0, 200, 83, 0.15);
-                transition: all 0.2s ease;
-                margin-bottom: 3rem;
-                width: 85%;
-                max-width: 320px;
-            }
-
-            .splash-start-btn:hover {
-                box-shadow:
-                    0 4px 25px rgba(0, 200, 83, 0.6),
-                    0 0 50px rgba(0, 200, 83, 0.25);
-                transform: scale(1.03);
-            }
-            
-            .splash-start-btn:active {
-                transform: scale(0.97);
-            }
-
-            /* three circles with labels at the bottom */
-            .splash-features {
-                display: flex;
-                justify-content: center;
-                gap: 1.25rem;
-                position: relative;
-                z-index: 1;
-                width: 100%;
-            }
-        
-            .splash-feature {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 6px;
-                flex: 1;
-                max-width: 110px;
+                padding: 0 1.5rem 2rem;
             }
  
-            .splash-feature-icon {
-                width: 44px;
-                height: 44px;
-                border-radius: 50%;
-                background: rgba(0, 200, 83, 0.08);
-                border: 1px solid var(--border-strong);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 18px;
-                color: var(--accent);
+            /* Background Image */
+            .splash-bg {
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                z-index: 0;
             }
-        
-            .splash-feature-title {
-                font-size: 11px;
-                font-weight: 600;
-                color: var(--text-primary);
-                text-transform: uppercase;
-                letter-spacing: 1px;
+ 
+        /* Ambient Glow */
+        .splash-ambient {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(
+                circle at 50% 45%,
+                rgba(80, 255, 120, 0.08),
+                transparent 60%
+            );
+            animation: ambient 8s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+ 
+        @keyframes ambient {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.9; }
+        }
+ 
+        /* Chart Glow */
+        .splash-chart-glow {
+            position: absolute;
+            left: 50%;
+            bottom: 32%;
+            transform: translateX(-50%);
+            width: 140px;
+            height: 80px;
+            background: radial-gradient(
+                circle,
+                rgba(0, 255, 128, 0.25),
+                transparent 70%
+            );
+            animation: glow 3s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+ 
+        @keyframes glow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+ 
+        /* Glowing Arrow */
+        .splash-arrow {
+            position: absolute;
+            right: 5%;
+            top: 18%;
+            width: 28%;
+            filter: drop-shadow(0 0 8px rgba(106, 255, 119, 0.6));
+            animation: beat 2.2s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 2;
+        }
+    
+        .splash-arrow svg {
+            width: 100%;
+            height: auto;
+        }
+ 
+        /* Beat Animation for the arrow*/
+        @keyframes beat {
+            0%, 45%, 100% {
+                transform: scale(1);
+                filter: drop-shadow(0 0 8px rgba(106, 255, 119, 0.6));
             }
-        
-            .splash-feature-sub {
-                font-size: 9px;
-                color: var(--text-dim);
-                text-transform: uppercase;
-                letter-spacing: 0.5px;
+            12% {
+                transform: scale(1.08);
+                filter: drop-shadow(0 0 20px rgba(125, 255, 138, 0.8));
             }
+            34% {
+                transform: scale(1.14);
+                filter: drop-shadow(0 0 36px rgba(125, 255, 138, 0.9));
+            }
+        }
+ 
+        /* Splash UI Elements*/
+        .splash-ui {
+            position: relative;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+ 
+        .splash-start-btn {
+            background: linear-gradient(180deg, #00E676 0%, #00A844 100%);
+            color: #000;
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            padding: 1.1rem 3.5rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow:
+                0 4px 20px rgba(0, 200, 83, 0.4),
+                0 0 40px rgba(0, 200, 83, 0.15);
+            transition: all 0.2s ease;
+            margin-bottom: 2rem;
+            width: 85%;
+            max-width: 320px;
+        }
+ 
+        .splash-start-btn:hover {
+            box-shadow:
+                0 4px 25px rgba(0, 200, 83, 0.6),
+                0 0 50px rgba(0, 200, 83, 0.25);
+            transform: scale(1.03);
+        }
+    
+        .splash-start-btn:active {
+            transform: scale(0.97);
+        }
+    
+        .splash-features {
+            display: flex;
+            justify-content: center;
+            gap: 1.25rem;
+            width: 100%;
+        }
+    
+        .splash-feature {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            flex: 1;
+            max-width: 110px;
+        }
+ 
+        .splash-feature-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border-strong);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: var(--accent);
+        }
+    
+        .splash-feature-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    
+        .splash-feature-sub {
+            font-size: 9px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
 
         </style>
     </head>
