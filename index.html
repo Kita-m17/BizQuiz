@@ -74,6 +74,25 @@
             .screen.active {
                 display: flex; /* shown when .active class is added */
             }
+
+            /* Splash Layout */
+            #splash-screen {
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                padding: 2rem 1.5rem;
+            }
+
+            /* Backgrund Decoration */
+            #splash-screen::before {
+                content: ''; /* required — even if empty */
+                position: absolute; /* takes it out of normal flow */
+                top: 0; left: 0; right: 0; bottom: 0; /* covers full screen */
+                background: radial-gradient(ellipse at 50% 30%, rgba(0, 200, 83, 0.08) 0%, transparent 60%);
+                pointer-events: none; /* clicks pass through */
+                z-index: 0; /* sits behind content */
+            }
+
         </style>
     </head>
 
