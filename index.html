@@ -1,317 +1,352 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-        <meta name="theme-color" content="#0A1A0F">
-        <title>BizQuiz — M-Pesa</title>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#0A1A0F">
+  <title>BizQuiz — M-Pesa</title>
 
-        <style>
-            /* Reset CSS - default styles */
-            * {
-                box-sizing: border-box;
-                margin: 0;
-                padding: 0;
-            }
+  <style>
+    /* === CSS RESET === */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-            /* CSS Variables - Colour and Custom Properties */
-            :root {
-                /* Background layers - darkest to lightest */
-                --bg-body: #0A1A0F; /* deepest dark green-black */
-                --bg-card: #0F2518; /* slightly lighter - for cards/panels */
-                --bg-card-hover: #143020; /* hover state on interactive elements */
-                --bg-input: #1A3528; /* input fields, option buttons */
- 
-                /* M-Pesa brand green - the star of the show */
-                --accent: #00C853; /* primary green */
-                --accent-dim: #00A844; /* slightly darker green for borders */
-                --accent-glow: rgba(0, 200, 83, 0.15); /* subtle green glow effect */
- 
-                /* Text colors - brightest to dimmest */
-                --text-primary: #FFFFFF;
-                --text-secondary: #A8C5B0; /* muted green-tinted gray */
-                --text-dim: #5A7A62; /* very subtle, for hints */
- 
-                /* Score feedback */
-                --gain: #00E676; /* bright green for correct/gains */
-                --loss: #FF5252; /* red for wrong/losses */
- 
-                /* Borders */
-                --border: rgba(0, 200, 83, 0.2); /* subtle green border */
-                --border-strong: rgba(0, 200, 83, 0.4); /* more visible border */
- 
-                /* Sizing */
-                --radius: 12px; /* standard corner rounding */
-                --radius-sm: 8px; /* smaller corners for buttons */
-            }
+    /* === CSS VARIABLES === */
+    :root {
+      --bg-body: #0A1A0F;
+      --bg-card: #0F2518;
+      --bg-card-hover: #143020;
+      --bg-input: #1A3528;
+      --accent: #00C853;
+      --accent-dim: #00A844;
+      --accent-glow: rgba(0, 200, 83, 0.15);
+      --text-primary: #FFFFFF;
+      --text-secondary: #A8C5B0;
+      --text-dim: #5A7A62;
+      --gain: #00E676;
+      --loss: #FF5252;
+      --border: rgba(0, 200, 83, 0.2);
+      --border-strong: rgba(0, 200, 83, 0.4);
+      --radius: 12px;
+      --radius-sm: 8px;
+    }
 
-            /* Body Styles */
-            body {
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-                background: var(--bg-body);
-                color: var(--text-primary);
-                min-height: 100dvh;
-                overflow-x: hidden;
-            }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-body);
+      color: var(--text-primary);
+      min-height: 100dvh;
+      overflow-x: hidden;
+    }
 
-            /* Game Container */
-            #game-container {
-                max-width: 430px;
-                margin: 0 auto;
-                min-height: 100dvh;
-                position: relative;
-                overflow: hidden;
-            }
+    #game-container {
+      max-width: 430px;
+      margin: 0 auto;
+      min-height: 100dvh;
+      position: relative;
+      overflow: hidden;
+    }
 
-            /* Screen Management */
-            .screen {
-                display: none; /* hidden by default */
-                flex-direction: column;
-                min-height: 100dvh;
-                padding: 0 16px;
-            }
-        
-            .screen.active {
-                display: flex; /* shown when .active class is added */
-            }
+    /* === SCREEN MANAGEMENT === */
+    .screen {
+      display: none;
+      flex-direction: column;
+      min-height: 100dvh;
+      padding: 0 16px;
+    }
+    .screen.active {
+      display: flex;
+    }
 
-            /*splash screen*/
-            #splash-screen {
-                position: relative;
-                justify-content: flex-end;  /* push button & features to bottom */
-                align-items: center;
-                text-align: center;
-                padding: 0 1.5rem 2rem;
-            }
- 
-            /* Background Image */
-            .splash-bg {
-                position: absolute;
-                inset: 0;
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                z-index: 0;
-            }
- 
-        /* Ambient Glow */
-        .splash-ambient {
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(
-                circle at 50% 45%,
-                rgba(80, 255, 120, 0.08),
-                transparent 60%
-            );
-            animation: ambient 8s ease-in-out infinite;
-            pointer-events: none;
-            z-index: 1;
-        }
- 
-        @keyframes ambient {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.9; }
-        }
- 
-        /* Chart Glow */
-        .splash-chart-glow {
-            position: absolute;
-            left: 50%;
-            bottom: 32%;
-            transform: translateX(-50%);
-            width: 140px;
-            height: 80px;
-            background: radial-gradient(
-                circle,
-                rgba(0, 255, 128, 0.25),
-                transparent 70%
-            );
-            animation: glow 3s ease-in-out infinite;
-            pointer-events: none;
-            z-index: 1;
-        }
- 
-        @keyframes glow {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
-        }
- 
-        /* Glowing Arrow */
-        .splash-arrow {
-            position: absolute;
-            right: 5%;
-            top: 18%;
-            width: 28%;
-            filter: drop-shadow(0 0 8px rgba(106, 255, 119, 0.6));
-            animation: beat 2.2s ease-in-out infinite;
-            pointer-events: none;
-            z-index: 2;
-        }
-    
-        .splash-arrow svg {
-            width: 100%;
-            height: auto;
-        }
- 
-        /* Beat Animation for the arrow*/
-        @keyframes beat {
-            0%, 45%, 100% {
-                transform: scale(1);
-                filter: drop-shadow(0 0 8px rgba(106, 255, 119, 0.6));
-            }
-            12% {
-                transform: scale(1.08);
-                filter: drop-shadow(0 0 20px rgba(125, 255, 138, 0.8));
-            }
-            34% {
-                transform: scale(1.14);
-                filter: drop-shadow(0 0 36px rgba(125, 255, 138, 0.9));
-            }
-        }
- 
-        /* Splash UI Elements*/
-        .splash-ui {
-            position: relative;
-            z-index: 3;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-        }
- 
-        .splash-start-btn {
-            background: linear-gradient(180deg, #00E676 0%, #00A844 100%);
-            color: #000;
-            font-size: 20px;
-            font-weight: 800;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            padding: 1.1rem 3.5rem;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow:
-                0 4px 20px rgba(0, 200, 83, 0.4),
-                0 0 40px rgba(0, 200, 83, 0.15);
-            transition: all 0.2s ease;
-            margin-bottom: 2rem;
-            width: 85%;
-            max-width: 320px;
-        }
- 
-        .splash-start-btn:hover {
-            box-shadow:
-                0 4px 25px rgba(0, 200, 83, 0.6),
-                0 0 50px rgba(0, 200, 83, 0.25);
-            transform: scale(1.03);
-        }
-    
-        .splash-start-btn:active {
-            transform: scale(0.97);
-        }
-    
-        .splash-features {
-            display: flex;
-            justify-content: center;
-            gap: 1.25rem;
-            width: 100%;
-        }
-    
-        .splash-feature {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            flex: 1;
-            max-width: 110px;
-        }
- 
-        .splash-feature-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid var(--border-strong);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            color: var(--accent);
-        }
-    
-        .splash-feature-title {
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--text-primary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-    
-        .splash-feature-sub {
-            font-size: 9px;
-            color: var(--text-dim);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
+    /* ==============================================
+       SPLASH SCREEN
+       ============================================== */
 
-        </style>
-    </head>
+    /*
+      FULLSCREEN SPLASH
+      height: 100dvh — fills exactly the visible screen
+      padding: 0 — overrides .screen padding so image goes edge-to-edge
+      justify-content: flex-end — pushes the button/features to the bottom
+      The image fills the background, UI floats on top at the bottom.
+    */
+    #splash-screen {
+      position: relative;
+      height: 100dvh;
+      padding: 0;
+      justify-content: flex-end;
+      align-items: center;
+      text-align: center;
+      overflow: hidden;
+    }
 
-    <body>
-        <div id="game-container">
+    /*
+      BACKGROUND IMAGE — FILLS ENTIRE SCREEN
+      position: absolute + inset: 0 = stretches to fill parent edges
+      object-fit: cover = scales image to fill, crops if needed
+      (never stretches or squashes — like zooming until it fills)
+    */
+    .splash-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
 
-            <!-- SCREEN 1: Splash/Start Screen -->
-            <div id="splash-screen" class="screen active">
-                <p style="color: var(--accent); padding-top: 40vh; text-align: center;">
-                    <!-- hero image-->
-                    <img 
-                        src="images/splash-hero.png" 
-                        alt="M-Pesa BizQuiz — Answer. Learn. Grow." 
-                        class="splash-hero-img"
-                    >
-                
-                    <button class="splash-start-btn" onclick="startGame()">
-                        Start game &nbsp; >
-                    </button>
+    /*
+      AMBIENT GLOW — soft pulsing green light
+      Creates a subtle "breathing" effect behind the logo.
+      animation: 8 seconds, repeats forever.
+    */
+    .splash-ambient {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        circle at 50% 45%,
+        rgba(80, 255, 120, 0.08),
+        transparent 60%
+      );
+      animation: ambient 8s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+    @keyframes ambient {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.85; }
+    }
 
-                    <!-- Three feature icons at bottom -->
-                    <div class="splash-features">
-                        <div class="splash-feature">
-                            <div class="splash-feature-icon">🏆</div>
-                            <div class="splash-feature-title">Quiz</div>
-                            <div class="splash-feature-sub">your knowledge</div>
-                        </div>
+    /*
+      CHART GLOW — pulsing light under the bar chart area
+    */
+    .splash-chart-glow {
+      position: absolute;
+      left: 50%;
+      bottom: 30%;
+      transform: translateX(-50%);
+      width: 160px;
+      height: 80px;
+      background: radial-gradient(circle, rgba(0, 255, 128, 0.25), transparent 70%);
+      animation: glow 3s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+    @keyframes glow {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
 
-                        <div class="splash-feature">
-                            <div class="splash-feature-icon">📈</div>
-                            <div class="splash-feature-title">Earn points</div>
-                            <div class="splash-feature-sub">climb the ranks</div>
-                        </div>
+    /*
+      GLOWING ARROW (SVG)
+      Positioned top-right, pulses with a "heartbeat" animation.
+      filter: drop-shadow creates a glow around the arrow shape.
+    */
+    .splash-arrow {
+      position: absolute;
+      right: 5%;
+      top: 18%;
+      width: 28%;
+      filter: drop-shadow(0 0 8px rgba(106, 255, 119, 0.6));
+      animation: beat 2.2s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .splash-arrow svg { width: 100%; height: auto; }
 
-                        <div class="splash-feature">
-                            <div class="splash-feature-icon">📱</div>
-                            <div class="splash-feature-title">Powered by</div>
-                            <div class="splash-feature-sub">M-Pesa</div>
-                        </div>
-                    </div>
+    /* Heartbeat: two quick pumps, then rest */
+    @keyframes beat {
+      0%, 45%, 100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 8px rgba(106, 255, 119, 0.6));
+      }
+      12% {
+        transform: scale(1.08);
+        filter: drop-shadow(0 0 20px rgba(125, 255, 138, 0.8));
+      }
+      34% {
+        transform: scale(1.14);
+        filter: drop-shadow(0 0 36px rgba(125, 255, 138, 0.9));
+      }
+    }
 
-                </p>
-            </div>
+    /*
+      UI OVERLAY — button and features sit at the bottom
+      z-index: 3 ensures they're on top of everything
+      padding adds breathing room at the edges and bottom
+    */
+    .splash-ui {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      padding: 0 1.5rem 2rem;
+    }
 
-            <!-- SCREEN 2: Main gameplay -->
-            <div id="game-screen" class="screen">
-                <p style="color: var(--accent); padding-top: 40vh; text-align: center;">
-                    Game screen goes here (Steps 3-6)
-                </p>
-            </div>
+    /* START BUTTON — gradient, pill-shaped, glowing */
+    .splash-start-btn {
+      background: linear-gradient(180deg, #00E676 0%, #00A844 100%);
+      color: #000;
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 1.1rem 3.5rem;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow:
+        0 4px 20px rgba(0, 200, 83, 0.4),
+        0 0 40px rgba(0, 200, 83, 0.15);
+      transition: all 0.2s ease;
+      margin-bottom: 2rem;
+      width: 85%;
+      max-width: 320px;
+    }
+    .splash-start-btn:hover {
+      box-shadow:
+        0 4px 25px rgba(0, 200, 83, 0.6),
+        0 0 50px rgba(0, 200, 83, 0.25);
+      transform: scale(1.03);
+    }
+    .splash-start-btn:active {
+      transform: scale(0.97);
+    }
 
-            <!-- SCREEN 3: End / Results -->
-            <div id="end-screen" class="screen">
-                <p style="color: var(--accent); padding-top: 40vh; text-align: center;">
-                    End screen goes here (Step 9)
-                </p>
-            </div>
+    /* FEATURE ICONS — three circles with labels */
+    .splash-features {
+      display: flex;
+      justify-content: center;
+      gap: 1.25rem;
+      width: 100%;
+    }
+    .splash-feature {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      flex: 1;
+      max-width: 110px;
+    }
+    .splash-feature-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid var(--border-strong);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: var(--accent);
+    }
+    .splash-feature-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .splash-feature-sub {
+      font-size: 9px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+  </style>
+</head>
+<body>
+  <div id="game-container">
+
+    <!-- SCREEN 1: Splash -->
+    <div id="splash-screen" class="screen active">
+
+      <!-- LAYER 1: Background image (fills entire screen) -->
+      <img
+        src="images/splash-hero.png"
+        alt="M-Pesa BizQuiz — Answer. Learn. Grow."
+        class="splash-bg"
+      >
+
+      <!-- LAYER 2: Ambient breathing glow -->
+      <div class="splash-ambient"></div>
+
+      <!-- LAYER 3: Glow under bar chart -->
+      <div class="splash-chart-glow"></div>
+
+      <!-- LAYER 4: Animated glowing arrow (SVG) -->
+      <div class="splash-arrow">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="arrowGrad" x1="0" x2="1">
+              <stop offset="0%" stop-color="#8CFF73"/>
+              <stop offset="100%" stop-color="#E8FFC5"/>
+            </linearGradient>
+          </defs>
+          <polyline
+            points="20,160 70,110 105,125 145,70"
+            fill="none"
+            stroke="url(#arrowGrad)"
+            stroke-width="12"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <polygon points="145,70 145,98 182,52" fill="#E8FFC5"/>
+        </svg>
+      </div>
+
+      <!-- LAYER 5: UI (button + features) at the bottom -->
+      <div class="splash-ui">
+        <button class="splash-start-btn" onclick="startGame()">
+          Start game &nbsp; ›
+        </button>
+
+        <div class="splash-features">
+          <div class="splash-feature">
+            <div class="splash-feature-icon">🏆</div>
+            <div class="splash-feature-title">Quiz</div>
+            <div class="splash-feature-sub">your knowledge</div>
+          </div>
+          <div class="splash-feature">
+            <div class="splash-feature-icon">📈</div>
+            <div class="splash-feature-title">Earn points</div>
+            <div class="splash-feature-sub">climb the ranks</div>
+          </div>
+          <div class="splash-feature">
+            <div class="splash-feature-icon">📱</div>
+            <div class="splash-feature-title">Powered by</div>
+            <div class="splash-feature-sub">M-Pesa</div>
+          </div>
         </div>
+      </div>
 
-    </body>
+    </div>
+
+    <!-- SCREEN 2: Main gameplay -->
+    <div id="game-screen" class="screen">
+      <p style="color: var(--accent); padding-top: 40vh; text-align: center;">
+        Game screen goes here (Steps 3-6)
+      </p>
+    </div>
+
+    <!-- SCREEN 3: End / Results -->
+    <div id="end-screen" class="screen">
+      <p style="color: var(--accent); padding-top: 40vh; text-align: center;">
+        End screen goes here (Step 9)
+      </p>
+    </div>
+
+  </div>
+
+  <script>
+    function showScreen(screenId) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(screenId).classList.add('active');
+    }
+
+    function startGame() {
+      showScreen('game-screen');
+    }
+  </script>
+</body>
 </html>
