@@ -56,7 +56,8 @@
 
             /* Game Container */
             #game-container {
-                max-width: 430px;
+                width: 100%;
+                max-width: 600px;
                 margin: 0 auto;
                 min-height: 100dvh;
                 position: relative;
@@ -185,8 +186,10 @@
             .splash-start-btn {
                 background: linear-gradient(180deg, #00E676 0%, #00A844 100%);
                 color: #000;
-                font-size: 20px;
                 font-weight: 800;
+                font-size: clamp(16px, 4.5vw, 22px);
+                width: clamp(260px, 80%, 380px);
+                
                 letter-spacing: 3px;
                 text-transform: uppercase;
                 padding: 1.1rem 3.5rem;
@@ -198,7 +201,6 @@
                     0 0 40px rgba(0, 200, 83, 0.15);
                 transition: all 0.2s ease;
                 margin-bottom: 2rem;
-                width: 85%;
                 max-width: 320px;
             }
     
