@@ -887,6 +887,7 @@
                             🔥 STREAK <span id="streak-count">x0</span>
                         </div>
                     </div>
+
                     <!-- CANVAS ELEMENT -->
                     <div class="chart-container">
                         <canvas id="scoreChart"></canvas>
@@ -904,6 +905,7 @@
                             <span class="question-num" id="q-num">Question 1</span>
                             <span class="question-category" id="q-cat">Business</span>
                         </div>
+
                         <div class="question-text" id="q-text">Loading...</div>
                         <div class="options-list" id="options-list"></div>
                     </div>
@@ -911,41 +913,41 @@
                     <!-- EXPLAINER PANEL — hidden during question, visible after answering -->
                     <div class="explainer-panel" id="explainer-panel">
 
-                    <!-- Result: Correct/Wrong + points -->
-                    <div class="result-header">
-                        <div class="result-icon" id="result-icon">✓</div>
-                        
-                        <div>
-                            <div class="result-text" id="result-text">Correct!</div>
-                            <div class="result-points" id="result-points">+4 POINTS</div>
+                        <!-- Result: Correct/Wrong + points -->
+                        <div class="result-header">
+                            <div class="result-icon" id="result-icon">✓</div>
+                            
+                            <div>
+                                <div class="result-text" id="result-text">Correct!</div>
+                                <div class="result-points" id="result-points">+4 POINTS</div>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- The correct answer -->
-                    <div class="correct-answer-row">
-                        <div class="correct-answer-label">The correct answer is:</div>
+                        <!-- The correct answer -->
+                        <div class="correct-answer-row">
+                            <div class="correct-answer-label">The correct answer is:</div>
                             <div class="correct-answer-pill">
-                            <span class="correct-answer-letter" id="correct-letter">C</span>
-                            <span class="correct-answer-text" id="correct-text">Working capital</span>
+                                <span class="correct-answer-letter" id="correct-letter">C</span>
+                                <span class="correct-answer-text" id="correct-text">Working capital</span>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Explanation -->
-                    <div class="explanation-section">
-                        <div class="explanation-label">📖 Explanation</div>
-                        <div class="explanation-text" id="explanation-text"></div>
-                    </div>
+                        <!-- Explanation -->
+                        <div class="explanation-section">
+                            <div class="explanation-label">📖 Explanation</div>
+                            <div class="explanation-text" id="explanation-text"></div>
+                        </div>
 
-                    <!-- Key Takeaway -->
-                    <div class="takeaway-box">
-                        <div class="takeaway-label">💡 Key Takeaway</div>
-                        <div class="takeaway-text" id="takeaway-text"></div>
-                    </div>
+                        <!-- Key Takeaway -->
+                        <div class="takeaway-box">
+                            <div class="takeaway-label">💡 Key Takeaway</div>
+                            <div class="takeaway-text" id="takeaway-text"></div>
+                        </div>
 
-                    <!-- Next button -->
-                    <button class="next-btn" id="next-btn" onclick="nextQuestion()">
-                        Next question →
-                    </button>
+                        <!-- Next button -->
+                        <button class="next-btn" id="next-btn" onclick="nextQuestion()">
+                            Next question →
+                        </button>
                     </div>
 
                 </div>
@@ -980,7 +982,7 @@
                 opts: ["Low profit", "Too much stock", "Poor cash flow", "High interest rates"],
                 ans: 2,
                 gain: 3, loss: 1,
-                explainer: "Cash flow is about timing — money actually in your hand versus money owed to you. A profitable business can still collapse if cash isn't available when bills are due.",
+                explainer: "Cash flow is about timing - money actually in your hand versus money owed to you. A profitable business can still collapse if cash isn't available when bills are due.",
                 takeaway: "Sales on paper aren't cash in the till. Always track when money actually arrives, not just what's owed."
             },
             {
@@ -991,8 +993,8 @@
                 opts: ["More stock", "A bigger loan", "An emergency fund", "More leverage"],
                 ans: 2,
                 gain: 4, loss: 2,
-                explainer: "An emergency fund is cash set aside for shocks — illness, breakdowns, slow seasons. Even one month's expenses saved prevents a bad week from becoming a crisis.",
-                takeaway: "Save at least one month's expenses where you can access it quickly. Start small — even KSh 500/week adds up."
+                explainer: "An emergency fund is cash set aside for shocks - illness, breakdowns, slow seasons. Even one month's expenses saved prevents a bad week from becoming a crisis.",
+                takeaway: "Save at least one month's expenses where you can access it quickly. Start small - even KSh 500/week adds up."
             },
             {
                 term: "Diversification",
@@ -1003,7 +1005,7 @@
                 ans: 1,
                 gain: 5, loss: 2,
                 explainer: "Diversification means not depending on one thing for your income. If one product fails, others carry you. The same idea applies to stocks, crops, or customers.",
-                takeaway: "Never put all your eggs in one basket — whether it's products, customers, or investments."
+                takeaway: "Never put all your eggs in one basket - whether it's products, customers, or investments."
             },
             {
                 term: "Working Capital",
@@ -1013,7 +1015,7 @@
                 opts: ["Profit", "Customers", "Working capital", "Collateral"],
                 ans: 2,
                 gain: 4, loss: 2,
-                explainer: "Working capital is the cash available for day-to-day operations — buying stock, paying staff, covering bills. Being 'rich' in stock but starved of cash is a classic trap.",
+                explainer: "Working capital is the cash available for day-to-day operations - buying stock, paying staff, covering bills. Being 'rich' in stock but starved of cash is a classic trap.",
                 takeaway: "Always keep enough cash on hand to buy stock, pay bills, and handle urgent needs."
             },
             {
@@ -1024,10 +1026,10 @@
                 opts: ["Interest", "Principal", "Collateral", "Dividend"],
                 ans: 2,
                 gain: 5, loss: 2,
-                explainer: "Collateral is an asset you pledge to secure a loan. If you fail to repay, the lender can seize it. It reduces the lender's risk — and often gets you a lower interest rate.",
+                explainer: "Collateral is an asset you pledge to secure a loan. If you fail to repay, the lender can seize it. It reduces the lender's risk - and often gets you a lower interest rate.",
                 takeaway: "Collateral lowers your interest rate but puts your asset at risk. Only pledge what you can afford to lose."
             },
-            // === TIER 2: INTERMEDIATE (Q6-11) ===
+            // TIER 2: INTERMEDIATE (Q6-11)
             {
                 term: "Rule of 72",
                 cat: "Compounding",
@@ -1059,7 +1061,7 @@
                 ans: 2,
                 gain: 10, loss: 5,
                 explainer: "Compound interest earns interest on interest. Year 1: 100. Year 2: 110. Year 3: 121. Total = 331. Simple interest would only give 300.",
-                takeaway: "Start investing early — compound interest rewards time. The longer your money grows, the bigger the snowball."
+                takeaway: "Start investing early - compound interest rewards time. The longer your money grows, the bigger the snowball."
             },
             {
                 term: "Break-Even Point",
@@ -1092,9 +1094,9 @@
                 ans: 1,
                 gain: 12, loss: 5,
                 explainer: "A bear market means falling prices and pessimism. A bull market means rising prices and confidence. Memory trick: a bull attacks upward; a bear swipes downward.",
-                takeaway: "Bear markets are when smart investors buy — prices are low. Bull markets are when most people wish they had bought earlier."
+                takeaway: "Bear markets are when smart investors buy - prices are low. Bull markets are when most people wish they had bought earlier."
             },
-            // === TIER 3: ADVANCED (Q12-15) ===
+            // TIER 3: ADVANCED (Q12-15)
             {
                 term: "Dividend Yield",
                 cat: "Investing",
@@ -1104,7 +1106,7 @@
                 ans: 1,
                 gain: 15, loss: 6,
                 explainer: "Dividend yield = annual dividend ÷ share price × 100. Here: 50 ÷ 1,000 × 100 = 5%. It tells you the 'income return' you get for holding the share.",
-                takeaway: "Dividend yield lets you compare the income from different shares — like comparing rent from different properties."
+                takeaway: "Dividend yield lets you compare the income from different shares - like comparing rent from different properties."
             },
             {
                 term: "P/E Ratio",
@@ -1115,7 +1117,7 @@
                 ans: 2,
                 gain: 16, loss: 6,
                 explainer: "P/E ratio = price ÷ earnings per share. 150 ÷ 10 = 15. It shows how many years of profit it takes to 'earn back' the share price.",
-                takeaway: "A high P/E means investors expect growth. A low P/E might mean a bargain — or a company in trouble. Always look deeper."
+                takeaway: "A high P/E means investors expect growth. A low P/E might mean a bargain - or a company in trouble. Always look deeper."
             },
             {
                 term: "Leverage",
@@ -1125,7 +1127,7 @@
                 opts: ["5%", "10%", "20%", "40%"],
                 ans: 2,
                 gain: 14, loss: 5,
-                explainer: "Leverage magnifies results. A 10% gain on KSh 2,000 = KSh 200 profit — that's 20% on your KSh 1,000. But the same leverage doubles your losses too.",
+                explainer: "Leverage magnifies results. A 10% gain on KSh 2,000 = KSh 200 profit - that's 20% on your KSh 1,000. But the same leverage doubles your losses too.",
                 takeaway: "Leverage is a tool, not a shortcut. It multiplies gains AND losses equally. Never leverage more than you can afford to lose."
             },
             {
@@ -1136,7 +1138,7 @@
                 opts: ["Down 20%", "Down 40%", "Down 80%", "Untouched"],
                 ans: 2,
                 gain: 20, loss: 8,
-                explainer: "Margin amplifies losses. With 50% margin, a 40% price fall wipes 80% of your own stake. This is why brokers issue 'margin calls' — demanding more cash.",
+                explainer: "Margin amplifies losses. With 50% margin, a 40% price fall wipes 80% of your own stake. This is why brokers issue 'margin calls' - demanding more cash.",
                 takeaway: "Margin trading can destroy your capital faster than you think. Most professional traders use minimal margin."
             }
             ];
@@ -1384,9 +1386,9 @@
             }
 
             /*
-            UPDATE CHART — adds a new point with correct color.
-            Each point keeps its own color. Segment styling
-            handles the line color between points automatically.
+                UPDATE CHART - adds a new point with correct color.
+                Each point keeps its own color. Segment styling
+                handles the line color between points automatically.
             */
             function updateChart(newScore, wasCorrect) {
                 const data = chart.data.datasets[0];
@@ -1477,7 +1479,7 @@
             }
 
             /*
-                SELECT ANSWER — NEW FLOW
+                SELECT ANSWER - NEW FLOW
                 1. Player taps an option
                 2. Options flash green/red briefly (500ms)
                 3. Question content hides, explainer panel slides in
@@ -1540,19 +1542,19 @@
                     const resultPoints = document.getElementById('result-points');
 
                     if (correct) {
-                    resultIcon.className = 'result-icon correct';
-                    resultIcon.textContent = '✓';
-                    resultText.className = 'result-text correct';
-                    resultText.textContent = 'Correct!';
-                    resultPoints.className = 'result-points correct';
-                    resultPoints.textContent = '+' + delta + ' POINTS';
+                        resultIcon.className = 'result-icon correct';
+                        resultIcon.textContent = '✓';
+                        resultText.className = 'result-text correct';
+                        resultText.textContent = 'Correct!';
+                        resultPoints.className = 'result-points correct';
+                        resultPoints.textContent = '+' + delta + ' POINTS';
                     } else {
-                    resultIcon.className = 'result-icon wrong';
-                    resultIcon.textContent = '✗';
-                    resultText.className = 'result-text wrong';
-                    resultText.textContent = 'Wrong!';
-                    resultPoints.className = 'result-points wrong';
-                    resultPoints.textContent = delta + ' POINTS';
+                        resultIcon.className = 'result-icon wrong';
+                        resultIcon.textContent = '✗';
+                        resultText.className = 'result-text wrong';
+                        resultText.textContent = 'Wrong!';
+                        resultPoints.className = 'result-points wrong';
+                        resultPoints.textContent = delta + ' POINTS';
                     }
 
                     // Show correct answer
