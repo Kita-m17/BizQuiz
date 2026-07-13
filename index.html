@@ -7,45 +7,29 @@
         <title>BizQuiz — M-Pesa</title>
 
         <style>
-            /* Reset CSS - default styles */
-            * {
-                box-sizing: border-box;
-                margin: 0;
-                padding: 0;
-            }
+            /* CSS RESET */
+            * { box-sizing: border-box; margin: 0; padding: 0; }
 
-            /* CSS Variables - Colour and Custom Properties */
+            /* CSS VARIABLES */
             :root {
-                /* Background layers - darkest to lightest */
-                --bg-body: #0A1A0F; /* deepest dark green-black */
-                --bg-card: #0F2518; /* slightly lighter - for cards/panels */
-                --bg-card-hover: #143020; /* hover state on interactive elements */
-                --bg-input: #1A3528; /* input fields, option buttons */
- 
-                /* M-Pesa brand green - the star of the show */
-                --accent: #00C853; /* primary green */
-                --accent-dim: #00A844; /* slightly darker green for borders */
-                --accent-glow: rgba(0, 200, 83, 0.15); /* subtle green glow effect */
- 
-                /* Text colors - brightest to dimmest */
+                --bg-body: #0A1A0F;
+                --bg-card: #0F2518;
+                --bg-card-hover: #143020;
+                --bg-input: #1A3528;
+                --accent: #00C853;
+                --accent-dim: #00A844;
+                --accent-glow: rgba(0, 200, 83, 0.15);
                 --text-primary: #FFFFFF;
-                --text-secondary: #A8C5B0; /* muted green-tinted gray */
-                --text-dim: #5A7A62; /* very subtle, for hints */
- 
-                /* Score feedback */
-                --gain: #00E676; /* bright green for correct/gains */
-                --loss: #FF5252; /* red for wrong/losses */
- 
-                /* Borders */
-                --border: rgba(0, 200, 83, 0.2); /* subtle green border */
-                --border-strong: rgba(0, 200, 83, 0.4); /* more visible border */
- 
-                /* Sizing */
-                --radius: 12px; /* standard corner rounding */
-                --radius-sm: 8px; /* smaller corners for buttons */
+                --text-secondary: #A8C5B0;
+                --text-dim: #5A7A62;
+                --gain: #00E676;
+                --loss: #FF5252;
+                --border: rgba(0, 200, 83, 0.2);
+                --border-strong: rgba(0, 200, 83, 0.4);
+                --radius: 12px;
+                --radius-sm: 8px;
             }
 
-            /* Body Styles */
             body {
                 font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
                 background: var(--bg-body);
@@ -54,29 +38,29 @@
                 overflow-x: hidden;
             }
 
-            /* Game Container */
             #game-container {
+                /* RESPONSIVE CONTAINER */
                 width: 100%;
-                max-width: 800px;
+                max-width: 600px;
                 margin: 0 auto;
                 min-height: 100dvh;
                 position: relative;
                 overflow: hidden;
             }
 
-            /* Screen Management */
+            /* SCREEN MANAGEMENT */
             .screen {
-                display: none; /* hidden by default */
+                display: none;
                 flex-direction: column;
                 min-height: 100dvh;
                 padding: 0 16px;
             }
-        
+
             .screen.active {
-                display: flex; /* shown when .active class is added */
+                display: flex;
             }
 
-            /*splash screen*/
+            /* SPLASH SCREEN */
             #splash-screen {
                 position: relative;
                 height: 100dvh;
@@ -86,8 +70,8 @@
                 text-align: center;
                 overflow: hidden;
             }
- 
-            /* Background Image */
+
+            /* BACKGROUND IMAGE */
             .splash-bg {
                 position: absolute;
                 inset: 0;
@@ -96,8 +80,8 @@
                 object-fit: cover;
                 z-index: 0;
             }
- 
-            /* Ambient Glow */
+
+            /* AMBIENT GLOW */
             .splash-ambient {
                 position: absolute;
                 inset: 0;
@@ -110,13 +94,13 @@
                 pointer-events: none;
                 z-index: 1;
             }
- 
+
             @keyframes ambient {
                 0%, 100% { opacity: 1; }
-                50% { opacity: 0.9; }
+                50% { opacity: 0.85; }
             }
- 
-            /* Chart Glow */
+
+            /* CHART GLOW */
             .splash-chart-glow {
                 position: absolute;
                 left: 50%;
@@ -124,22 +108,18 @@
                 transform: translateX(-50%);
                 width: 160px;
                 height: 80px;
-                background: radial-gradient(
-                    circle,
-                    rgba(0, 255, 128, 0.25),
-                    transparent 70%
-                );
+                background: radial-gradient(circle, rgba(0, 255, 128, 0.25), transparent 70%);
                 animation: glow 3s ease-in-out infinite;
                 pointer-events: none;
                 z-index: 1;
             }
-    
+
             @keyframes glow {
                 0%, 100% { opacity: 1; }
-                50% { opacity: 0.8; }
+                50% { opacity: 0.7; }
             }
- 
-            /* Glowing Arrow */
+
+            /* GLOWING ARROW */
             .splash-arrow {
                 position: absolute;
                 right: 5%;
@@ -150,13 +130,10 @@
                 pointer-events: none;
                 z-index: 2;
             }
-    
-            .splash-arrow svg {
-                width: 100%;
-                height: auto;
-            }
- 
-            /* Beat Animation for the arrow*/
+
+            .splash-arrow svg { width: 100%; height: auto; }
+
+            /* Heartbeat: two quick pumps, then rest */
             @keyframes beat {
                 0%, 45%, 100% {
                     transform: scale(1);
@@ -171,8 +148,8 @@
                     filter: drop-shadow(0 0 36px rgba(125, 255, 138, 0.9));
                 }
             }
- 
-            /* Splash UI Elements*/
+
+            /* UI OVERLAY */
             .splash-ui {
                 position: relative;
                 z-index: 3;
@@ -182,18 +159,16 @@
                 width: 100%;
                 padding: 0 1.5rem 2rem;
             }
- 
-            /* Start Button */
+
+            /* START BUTTON — responsive sizing */
             .splash-start-btn {
                 background: linear-gradient(180deg, #00E676 0%, #00A844 100%);
                 color: #000;
-                font-weight: 800;
                 font-size: clamp(16px, 4.5vw, 22px);
-                width: clamp(260px, 80%, 380px);
-                
+                font-weight: 800;
                 letter-spacing: 3px;
                 text-transform: uppercase;
-                padding: 1.1rem 3.5rem;
+                padding: 1rem 2rem;
                 border: none;
                 border-radius: 50px;
                 cursor: pointer;
@@ -202,21 +177,22 @@
                     0 0 40px rgba(0, 200, 83, 0.15);
                 transition: all 0.2s ease;
                 margin-bottom: 2rem;
-                max-width: 320px;
+                width: 80%;
+                max-width: 380px;
             }
-    
+
             .splash-start-btn:hover {
                 box-shadow:
                     0 4px 25px rgba(0, 200, 83, 0.6),
                     0 0 50px rgba(0, 200, 83, 0.25);
                 transform: scale(1.03);
             }
-        
+
             .splash-start-btn:active {
                 transform: scale(0.97);
             }
-        
-            /* Features Section */
+
+            /* FEATURE ICONS — responsive sizing */
             .splash-features {
                 display: flex;
                 justify-content: center;
@@ -224,7 +200,7 @@
                 width: 100%;
                 padding: 0 1rem;
             }
-    
+
             .splash-feature {
                 display: flex;
                 flex-direction: column;
@@ -233,7 +209,7 @@
                 flex: 1;
                 max-width: 130px;
             }
-        
+
             .splash-feature-icon {
                 width: clamp(36px, 10vw, 48px);
                 height: clamp(36px, 10vw, 48px);
@@ -246,7 +222,7 @@
                 font-size: clamp(14px, 4vw, 20px);
                 color: var(--accent);
             }
-        
+
             .splash-feature-title {
                 font-size: clamp(9px, 2.5vw, 12px);
                 font-weight: 600;
@@ -254,15 +230,20 @@
                 text-transform: uppercase;
                 letter-spacing: 1px;
             }
-        
             .splash-feature-sub {
-                font-size: clamp(8px, 2vw, 9px);
+                font-size: clamp(8px, 2vw, 10px);
                 color: var(--text-dim);
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
             }
 
-            /* Game Header */
+            /* 
+                STEP 3: GAME HEADER
+                The top bar during gameplay. Three sections:
+                LEFT: M-Pesa BizQuiz branding
+                CENTER: Round counter + tier label
+                RIGHT: Score display + menu icon
+            */
             .game-header {
                 display: flex;
                 justify-content: space-between;
@@ -273,25 +254,30 @@
                 z-index: 10;
             }
 
-            /* Left Section - Brand */
+            /* LEFT SECTION — Brand */
             .header-brand {
                 display: flex;
                 flex-direction: column;
                 line-height: 1.1;
             }
+
             .header-brand-mpesa {
                 font-size: clamp(11px, 3vw, 14px);
                 font-weight: 700;
                 color: var(--text-primary);
                 letter-spacing: 1px;
             }
+
             .header-brand-bizquiz {
                 font-size: clamp(14px, 3.5vw, 18px);
                 font-weight: 800;
                 color: var(--accent);
             }
 
-            /* Center Section - round center */
+            /*
+                CENTER SECTION — Round counter
+                A bordered box showing "ROUND 4/15" and the tier label.
+            */
             .header-round {
                 display: flex;
                 flex-direction: column;
@@ -301,12 +287,14 @@
                 border-radius: var(--radius-sm);
                 padding: 0.4rem 1rem;
             }
+
             .header-round-num {
                 font-size: clamp(12px, 3vw, 15px);
                 font-weight: 700;
                 color: var(--text-primary);
                 letter-spacing: 1px;
             }
+
             .header-round-tier {
                 font-size: clamp(9px, 2.5vw, 11px);
                 font-weight: 600;
@@ -315,19 +303,25 @@
                 color: var(--accent);
             }
 
-            /* Tier Colours */
+            /* TIER COLORS */
             .tier-beginner { color: var(--accent); }
             .tier-intermediate { color: #FFD740; }  /* amber/gold */
-            .tier-advanced { color: #FF5252; } /* red - danger zone! */
+            .tier-advanced { color: #FF5252; } /* red — danger zone! */
 
-            /* Right Section - Score Display */
+            /*
+                RIGHT SECTION — Score display
+                Shows "K" icon (for KSh) + the current score number.
+            */
             .header-score {
                 display: flex;
                 align-items: center;
                 gap: 0.5rem;
             }
 
-            /* Badge */
+            /*
+                The "K" badge — a small circle with K inside.
+                Mimics a currency icon, like how apps show coin balances.
+            */
             .header-score-icon {
                 width: clamp(24px, 6vw, 30px);
                 height: clamp(24px, 6vw, 30px);
@@ -340,13 +334,18 @@
                 align-items: center;
                 justify-content: center;
             }
+
             .header-score-value {
                 font-size: clamp(16px, 4vw, 20px);
                 font-weight: 700;
                 color: var(--text-primary);
             }
 
-            /* Menu Icon */
+            /*
+                HAMBURGER MENU ICON
+                Three horizontal lines made from a single character ☰
+                For the MVP, this could open the dictionary or settings.
+            */
             .header-menu {
                 background: none;
                 border: none;
@@ -356,6 +355,425 @@
                 padding: 0.25rem;
             }
 
+            /* 
+                STEP 4: PORTFOLIO GRAPH
+                The share-price style graph that shows score history.
+                Green line = gains, red line = losses.
+            */
+
+            /* PORTFOLIO CARD */
+            .portfolio-card {
+                background: var(--bg-card);
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                margin: 0.5rem 1rem;
+                padding: 0.75rem 1rem 0.5rem;
+            }
+
+            /*
+                PORTFOLIO HEADER ROW
+                "YOUR PORTFOLIO" label on the left, streak badge on the right.
+            */
+            .portfolio-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                margin-bottom: 0.25rem;
+            }
+
+            .portfolio-label {
+                font-size: 10px;
+                color: var(--text-dim);
+                text-transform: uppercase;
+                letter-spacing: 1.5px;
+            }
+
+            .portfolio-value {
+                font-size: clamp(22px, 6vw, 30px);
+                font-weight: 700;
+                color: var(--accent);
+            }
+
+            /*
+                STREAK BADGE
+                Shows "🔥 STREAK x3" when player has consecutive correct answers.
+            */
+            .streak-badge {
+                display: none;  /* hidden until streak starts */
+                align-items: center;
+                gap: 4px;
+                background: rgba(255, 152, 0, 0.15);
+                border: 1px solid rgba(255, 152, 0, 0.3);
+                border-radius: 20px;
+                padding: 3px 10px;
+                font-size: 11px;
+                font-weight: 600;
+                color: #FFB74D;
+            }
+
+            .streak-badge.visible {
+                display: flex;  /* shown when class "visible" is added */
+            }
+
+            /*  CHART CONTAINER */
+            .chart-container {
+                width: 100%;
+                height: 120px;
+                margin-top: 0.5rem;
+            }
+
+            /*
+                START LINE LABEL
+                Shows "START K 35,000" — a reference point on the graph.
+            */
+            .portfolio-start-label {
+                display: flex;
+                justify-content: flex-end;
+                font-size: 9px;
+                color: var(--text-dim);
+                margin-top: 2px;
+            }
+
+            /* 
+                STEP 5: QUESTION CARD
+                The quiz area with question text and 4 answer options.
+            */
+
+            .question-card {
+                background: var(--bg-card);
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                margin: 0.5rem 1rem;
+                padding: 1rem;
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+            }
+
+            /*
+                QUESTION META ROW
+                "QUESTION 4" on the left, "BUSINESS" category on the right.
+            */
+            .question-meta {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 0.75rem;
+            }
+
+            .question-num {
+                font-size: 11px;
+                font-weight: 600;
+                color: var(--accent);
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+            .question-category {
+                font-size: 10px;
+                font-weight: 600;
+                color: var(--accent);
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                background: rgba(0, 200, 83, 0.1);
+                border: 1px solid var(--border);
+                border-radius: 4px;
+                padding: 2px 8px;
+            }
+
+            /*
+                QUESTION TEXT
+                The actual question. Large enough to read easily on mobile.
+            */
+            .question-text {
+                font-size: clamp(15px, 4vw, 18px);
+                font-weight: 600;
+                color: var(--text-primary);
+                line-height: 1.5;
+                margin-bottom: 1rem;
+            }
+
+            /* ANSWER OPTIONS */
+            .options-list {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            /*
+                INDIVIDUAL OPTION BUTTON
+                Each option has a letter badge (A/B/C/D) and the answer text.
+            */
+            .option-btn {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                background: var(--bg-input);
+                border: 1px solid var(--border);
+                border-radius: var(--radius-sm);
+                padding: 0.75rem 1rem;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                width: 100%;
+                text-align: left;
+            }
+
+            .option-btn:hover {
+                background: var(--bg-card-hover);
+                border-color: var(--border-strong);
+            }
+
+            /*
+                OPTION LETTER BADGE
+                The A/B/C/D circle on the left of each option.
+            */
+            .option-letter {
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                background: var(--bg-card);
+                border: 1px solid var(--border);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 12px;
+                font-weight: 700;
+                color: var(--text-secondary);
+                flex-shrink: 0;  /* prevents the circle from squashing */
+            }
+            .option-text {
+                font-size: clamp(13px, 3.5vw, 15px);
+                color: var(--text-primary);
+            }
+
+            /*
+                ANSWER FEEDBACK STATES
+                After the player selects an answer, we highlight:
+                - The correct answer in green
+                - The wrong selection in red
+                - Disable all buttons so they can't click again
+            */
+            .option-btn.correct {
+                background: rgba(0, 230, 118, 0.15);
+                border-color: var(--gain);
+            }
+            .option-btn.correct .option-letter {
+                background: var(--gain);
+                color: #000;
+                border-color: var(--gain);
+            }
+            .option-btn.wrong {
+                background: rgba(255, 82, 82, 0.15);
+                border-color: var(--loss);
+            }
+            .option-btn.wrong .option-letter {
+                background: var(--loss);
+                color: #fff;
+                border-color: var(--loss);
+            }
+            .option-btn.disabled {
+                pointer-events: none;  /* clicks pass through — can't select */
+                opacity: 0.5;
+            }
+
+            /* EXPLAINER PANEL */
+
+            /* Container for question content — hidden when showing explainer */
+            .question-content {
+                display: flex;
+                flex-direction: column;
+                flex: 1;
+            }
+            .question-content.hidden { display: none; }
+
+            /* The explainer panel that replaces question content */
+            .explainer-panel {
+                display: none;
+                flex-direction: column;
+                flex: 1;
+                /*
+                    animation: slideUp 0.3s — slides in from below
+                    This gives a satisfying transition feel when the
+                    answer is revealed.
+                */
+                animation: slideUp 0.3s ease-out;
+            }
+
+            .explainer-panel.visible {
+                display: flex;
+            }
+
+            @keyframes slideUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);  /* starts 20px below */
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);     /* slides to normal position */
+                }
+            }
+
+            /*
+                RESULT HEADER — "Correct!" or "Wrong!" with icon
+                display: flex puts the icon and text side by side.
+            */
+            .result-header {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                margin-bottom: 1rem;
+            }
+
+            .result-icon {
+                width: 48px;
+                height: 48px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 24px;
+                flex-shrink: 0;
+            }
+
+            .result-icon.correct {
+                background: rgba(0, 230, 118, 0.15);
+                border: 2px solid var(--gain);
+            }
+
+            .result-icon.wrong {
+                background: rgba(255, 82, 82, 0.15);
+                border: 2px solid var(--loss);
+            }
+
+            .result-text {
+                font-size: clamp(22px, 6vw, 28px);
+                font-weight: 800;
+            }
+
+            .result-text.correct { color: var(--gain); }
+            .result-text.wrong { color: var(--loss); }
+            .result-points {
+                font-size: 14px;
+                font-weight: 700;
+            }
+
+            .result-points.correct { color: var(--gain); }
+            .result-points.wrong { color: var(--loss); }
+
+            /* Shows the correct answer: "The correct answer is: C Working capital" */
+            .correct-answer-row {
+                margin-bottom: 1rem;
+            }
+
+            .correct-answer-label {
+                font-size: 12px;
+                color: var(--text-dim);
+                margin-bottom: 6px;
+            }
+
+            .correct-answer-pill {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                background: rgba(0, 230, 118, 0.1);
+                border: 1px solid rgba(0, 230, 118, 0.3);
+                border-radius: var(--radius-sm);
+                padding: 0.5rem 1rem;
+            }
+
+            .correct-answer-letter {
+                width: 24px;
+                height: 24px;
+                border-radius: 50%;
+                background: var(--gain);
+                color: #000;
+                font-size: 12px;
+                font-weight: 700;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .correct-answer-text {
+                font-size: 14px;
+                color: var(--gain);
+                font-weight: 500;
+            }
+
+            /* EXPLANATION section */
+            .explanation-section {
+                margin-bottom: 1rem;
+            }
+
+            .explanation-label {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                font-size: 12px;
+                font-weight: 600;
+                color: var(--accent);
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                margin-bottom: 0.5rem;
+            }
+            .explanation-text {
+                font-size: 13px;
+                color: var(--text-secondary);
+                line-height: 1.7;
+            }
+
+            /*
+                KEY TAKEAWAY BOX
+                A bordered box with a practical, memorable tip.
+                Sits to the right or below the explanation.
+            */
+            .takeaway-box {
+                background: var(--bg-card);
+                border: 1px solid var(--border);
+                border-radius: var(--radius-sm);
+                padding: 0.75rem 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .takeaway-label {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                font-size: 11px;
+                font-weight: 600;
+                color: #FFB74D;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                margin-bottom: 0.4rem;
+            }
+
+            .takeaway-text {
+                font-size: 12px;
+                color: var(--text-secondary);
+                line-height: 1.5;
+                font-style: italic;
+            }
+
+            /* NEXT QUESTION button — sits at the bottom */
+            .next-btn {
+                margin-top: auto;  /* pushes to bottom of flex container */
+                background: linear-gradient(180deg, #00E676 0%, #00A844 100%);
+                color: #000;
+                font-size: 16px;
+                font-weight: 700;
+                letter-spacing: 1px;
+                border: none;
+                border-radius: 50px;
+                padding: 0.9rem;
+                cursor: pointer;
+                width: 100%;
+                transition: all 0.2s ease;
+                box-shadow: 0 4px 15px rgba(0, 200, 83, 0.3);
+            }
+
+            .next-btn:active {
+                transform: scale(0.97);
+            }
         </style>
     </head>
 
@@ -364,119 +782,806 @@
 
             <!-- SCREEN 1: Splash -->
             <div id="splash-screen" class="screen active">
- 
-                <!-- LAYER 1: Background image (fills entire screen) -->
-                <img
-                    src="images/splash-hero.png"
-                    alt="M-Pesa BizQuiz — Answer. Learn. Grow."
-                    class="splash-bg"
-                >
- 
-                <!-- LAYER 2: Ambient breathing glow -->
-                <div class="splash-ambient"></div>
- 
-                <!-- LAYER 3: Glow under bar chart -->
-                <div class="splash-chart-glow"></div>
- 
-                <!-- LAYER 4: Animated glowing arrow (SVG) -->
-                <div class="splash-arrow">
-                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="arrowGrad" x1="0" x2="1">
-                            <stop offset="0%" stop-color="#8CFF73"/>
-                            <stop offset="100%" stop-color="#E8FFC5"/>
-                            </linearGradient>
-                        </defs>
-                        <polyline
-                            points="20,160 70,110 105,125 145,70"
-                            fill="none"
-                            stroke="url(#arrowGrad)"
-                            stroke-width="12"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        />
-                        <polygon points="145,70 145,98 182,52" fill="#E8FFC5"/>
-                    </svg>
-                </div>
- 
-                <!-- LAYER 5: UI (button + features) at the bottom -->
-                <div class="splash-ui">
-                    <button class="splash-start-btn" onclick="startGame()">
+
+            <!-- LAYER 1: Background image (fills entire screen) -->
+            <img
+                src="images/splash-hero.png"
+                alt="M-Pesa BizQuiz — Answer. Learn. Grow."
+                class="splash-bg"
+            >
+
+            <!-- LAYER 2: Ambient breathing glow -->
+            <div class="splash-ambient"></div>
+
+            <!-- LAYER 3: Glow under bar chart -->
+            <div class="splash-chart-glow"></div>
+
+            <!-- LAYER 4: Animated glowing arrow (SVG) -->
+            <div class="splash-arrow">
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+
+                    <defs>
+                        <linearGradient id="arrowGrad" x1="0" x2="1">
+                        <stop offset="0%" stop-color="#8CFF73"/>
+                        <stop offset="100%" stop-color="#E8FFC5"/>
+                        </linearGradient>
+                    </defs>
+
+                    <polyline
+                        points="20,160 70,110 105,125 145,70"
+                        fill="none"
+                        stroke="url(#arrowGrad)"
+                        stroke-width="12"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+
+                    <polygon points="145,70 145,98 182,52" fill="#E8FFC5"/>
+
+                </svg>
+            </div>
+
+            <!-- LAYER 5: UI (button + features) at the bottom -->
+            <div class="splash-ui">
+                <button class="splash-start-btn" onclick="startGame()">
                     Start game &nbsp; ›
-                    </button>
-            
-                    <div class="splash-features">
+                </button>
+
+                <div class="splash-features">
+
                     <div class="splash-feature">
                         <div class="splash-feature-icon">🏆</div>
                         <div class="splash-feature-title">Quiz</div>
                         <div class="splash-feature-sub">your knowledge</div>
                     </div>
+
                     <div class="splash-feature">
                         <div class="splash-feature-icon">📈</div>
                         <div class="splash-feature-title">Earn points</div>
                         <div class="splash-feature-sub">climb the ranks</div>
                     </div>
+
                     <div class="splash-feature">
                         <div class="splash-feature-icon">📱</div>
                         <div class="splash-feature-title">Powered by</div>
                         <div class="splash-feature-sub">M-Pesa</div>
                     </div>
-                    </div>
+
                 </div>
-            
             </div>
- 
+
+            </div>
+
             <!-- SCREEN 2: Main gameplay -->
             <div id="game-screen" class="screen">
 
-                <!-- Game Header -->
+                <!-- GAME HEADER (Step 3) -->
                 <div class="game-header">
-                
-                    <!-- Left: Brand -->
+    
                     <div class="header-brand">
                         <span class="header-brand-mpesa">M-PESA</span>
                         <span class="header-brand-bizquiz">BizQuiz</span>
                     </div>
 
-                    <!-- CENTER: Round counter + tier -->
-                        <div class="header-round">
+                    <div class="header-round">
                         <span class="header-round-num" id="round-num">ROUND 1/15</span>
                         <span class="header-round-tier tier-beginner" id="round-tier">Beginner</span>
                     </div>
 
-                    <!-- Right: Score Display & Menu -->
                     <div class="header-score">
                         <span class="header-score-icon">K</span>
                         <span class="header-score-value" id="score-display">35,000</span>
                         <button class="header-menu" aria-label="Menu">☰</button>
                     </div>
+                </div>
+
+                <!-- PORTFOLIO GRAPH (Step 4) -->
+                <div class="portfolio-card">
+                    <div class="portfolio-header">
+                        <div>
+                            <div class="portfolio-label">Your portfolio</div>
+                            <div class="portfolio-value" id="portfolio-value">K 35,000</div>
+                        </div>
+
+                        <div class="streak-badge" id="streak-badge">
+                            🔥 STREAK <span id="streak-count">x0</span>
+                        </div>
+                    </div>
+                    <!-- CANVAS ELEMENT -->
+                    <div class="chart-container">
+                        <canvas id="scoreChart"></canvas>
+                    </div>
+
+                    <div class="portfolio-start-label">START K 35,000</div>
+                </div>
+
+                <!-- QUESTION CARD (Step 5) -->
+                <div class="question-card">
+
+                    <!-- QUESTION CONTENT — visible during question, hidden during explainer -->
+                    <div class="question-content" id="question-content">
+                        <div class="question-meta">
+                            <span class="question-num" id="q-num">Question 1</span>
+                            <span class="question-category" id="q-cat">Business</span>
+                        </div>
+                        <div class="question-text" id="q-text">Loading...</div>
+                        <div class="options-list" id="options-list"></div>
+                    </div>
+
+                    <!-- EXPLAINER PANEL — hidden during question, visible after answering -->
+                    <div class="explainer-panel" id="explainer-panel">
+
+                    <!-- Result: Correct/Wrong + points -->
+                    <div class="result-header">
+                        <div class="result-icon" id="result-icon">✓</div>
+                        
+                        <div>
+                            <div class="result-text" id="result-text">Correct!</div>
+                            <div class="result-points" id="result-points">+4 POINTS</div>
+                        </div>
+                    </div>
+
+                    <!-- The correct answer -->
+                    <div class="correct-answer-row">
+                        <div class="correct-answer-label">The correct answer is:</div>
+                            <div class="correct-answer-pill">
+                            <span class="correct-answer-letter" id="correct-letter">C</span>
+                            <span class="correct-answer-text" id="correct-text">Working capital</span>
+                        </div>
+                    </div>
+
+                    <!-- Explanation -->
+                    <div class="explanation-section">
+                        <div class="explanation-label">📖 Explanation</div>
+                        <div class="explanation-text" id="explanation-text"></div>
+                    </div>
+
+                    <!-- Key Takeaway -->
+                    <div class="takeaway-box">
+                        <div class="takeaway-label">💡 Key Takeaway</div>
+                        <div class="takeaway-text" id="takeaway-text"></div>
+                    </div>
+
+                    <!-- Next button -->
+                    <button class="next-btn" id="next-btn" onclick="nextQuestion()">
+                        Next question →
+                    </button>
+                    </div>
 
                 </div>
-                <!-- Placeholder for steps 4-6 (graph, question, power-ups) -->
-                <p style="color: var(--text-dim); padding-top: 20vh; text-align: center;">
-                    Graph, questions, and power-ups go here (Steps 4-6)
-                </p>
-                
 
             </div>
- 
+
             <!-- SCREEN 3: End / Results -->
             <div id="end-screen" class="screen">
                 <p style="color: var(--accent); padding-top: 40vh; text-align: center;">
                     End screen goes here (Step 9)
                 </p>
             </div>
- 
+
         </div>
- 
+
+        <!-- Chart.js library — draws the portfolio graph -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+
         <script>
+            /* 
+                QUESTION DATA
+                All 15 questions with their options, correct answer,
+                score values, categories, and explainers.
+            */
+            const QUESTIONS = [
+            // TIER 1: BEGINNER (Q1-5)
+            {
+                term: "Cash Flow",
+                cat: "Business",
+                tier: "beginner",
+                q: "Your shop made KSh 50,000 in sales this month, but customers owe you KSh 30,000 still unpaid, and your bills are due now. What's your real problem?",
+                opts: ["Low profit", "Too much stock", "Poor cash flow", "High interest rates"],
+                ans: 2,
+                gain: 3, loss: 1,
+                explainer: "Cash flow is about timing — money actually in your hand versus money owed to you. A profitable business can still collapse if cash isn't available when bills are due.",
+                takeaway: "Sales on paper aren't cash in the till. Always track when money actually arrives, not just what's owed."
+            },
+            {
+                term: "Emergency Fund",
+                cat: "Saving",
+                tier: "beginner",
+                q: "Your motorbike taxi breaks down and you have no income for 2 weeks. What would have protected you?",
+                opts: ["More stock", "A bigger loan", "An emergency fund", "More leverage"],
+                ans: 2,
+                gain: 4, loss: 2,
+                explainer: "An emergency fund is cash set aside for shocks — illness, breakdowns, slow seasons. Even one month's expenses saved prevents a bad week from becoming a crisis.",
+                takeaway: "Save at least one month's expenses where you can access it quickly. Start small — even KSh 500/week adds up."
+            },
+            {
+                term: "Diversification",
+                cat: "Risk",
+                tier: "beginner",
+                q: "A trader puts all her savings into one type of vegetable to resell. A pest wipes out that crop region-wide. What could have protected her?",
+                opts: ["Buying more of the same vegetable", "Selling several different vegetables", "Borrowing more to buy in bulk", "Selling on credit"],
+                ans: 1,
+                gain: 5, loss: 2,
+                explainer: "Diversification means not depending on one thing for your income. If one product fails, others carry you. The same idea applies to stocks, crops, or customers.",
+                takeaway: "Never put all your eggs in one basket — whether it's products, customers, or investments."
+            },
+            {
+                term: "Working Capital",
+                cat: "Business",
+                tier: "beginner",
+                q: "A trader has KSh 100,000 worth of stock but only KSh 2,000 in cash and needs to restock urgently. What is she short of?",
+                opts: ["Profit", "Customers", "Working capital", "Collateral"],
+                ans: 2,
+                gain: 4, loss: 2,
+                explainer: "Working capital is the cash available for day-to-day operations — buying stock, paying staff, covering bills. Being 'rich' in stock but starved of cash is a classic trap.",
+                takeaway: "Always keep enough cash on hand to buy stock, pay bills, and handle urgent needs."
+            },
+            {
+                term: "Collateral",
+                cat: "Credit",
+                tier: "beginner",
+                q: "A bank asks you to pledge your motorbike before approving a loan. What is the motorbike acting as?",
+                opts: ["Interest", "Principal", "Collateral", "Dividend"],
+                ans: 2,
+                gain: 5, loss: 2,
+                explainer: "Collateral is an asset you pledge to secure a loan. If you fail to repay, the lender can seize it. It reduces the lender's risk — and often gets you a lower interest rate.",
+                takeaway: "Collateral lowers your interest rate but puts your asset at risk. Only pledge what you can afford to lose."
+            },
+            // === TIER 2: INTERMEDIATE (Q6-11) ===
+            {
+                term: "Rule of 72",
+                cat: "Compounding",
+                tier: "intermediate",
+                q: "You invest KSh 1,000 at 7% interest per year. Using the Rule of 72, how long until it doubles?",
+                opts: ["5 years", "10 years", "15 years", "20 years"],
+                ans: 1,
+                gain: 8, loss: 4,
+                explainer: "The Rule of 72: divide 72 by the interest rate to estimate doubling time. 72 ÷ 7 ≈ 10 years. At 14%, it would only take 5 years.",
+                takeaway: "72 ÷ interest rate = years to double your money. Use this to quickly judge any investment."
+            },
+            {
+                term: "Inflation",
+                cat: "Economics",
+                tier: "intermediate",
+                q: "Inflation is running at 8% per year. If you hide KSh 1,000 under your mattress for a year, what is it really worth now?",
+                opts: ["KSh 1,080", "KSh 920", "KSh 1,000", "KSh 800"],
+                ans: 1,
+                gain: 10, loss: 4,
+                explainer: "Inflation is a silent tax on cash. At 8%, KSh 1,000 today buys only what KSh 920 buys in a year. Cash that just sits still is quietly losing value.",
+                takeaway: "Your money must earn at least the inflation rate just to stand still. Saving under the mattress means losing money."
+            },
+            {
+                term: "Compound Interest",
+                cat: "Compounding",
+                tier: "intermediate",
+                q: "KSh 1,000 earns 10% interest, compounded yearly, for 3 years. How much interest is earned in total?",
+                opts: ["KSh 100", "KSh 300", "KSh 331", "KSh 1,000"],
+                ans: 2,
+                gain: 10, loss: 5,
+                explainer: "Compound interest earns interest on interest. Year 1: 100. Year 2: 110. Year 3: 121. Total = 331. Simple interest would only give 300.",
+                takeaway: "Start investing early — compound interest rewards time. The longer your money grows, the bigger the snowball."
+            },
+            {
+                term: "Break-Even Point",
+                cat: "Business",
+                tier: "intermediate",
+                q: "Your stall's costs are KSh 2,000/day. You earn KSh 100 profit per item sold. How many items must you sell to break even?",
+                opts: ["2", "10", "20", "200"],
+                ans: 2,
+                gain: 11, loss: 5,
+                explainer: "Break-even point = fixed costs ÷ profit per item. 2,000 ÷ 100 = 20 items. Sell fewer and you lose money; sell more and you're in profit.",
+                takeaway: "Know your break-even number every day. Below it you're losing money; above it you're earning."
+            },
+            {
+                term: "Liquidity",
+                cat: "Markets",
+                tier: "intermediate",
+                q: "Which of these can you turn into cash the FASTEST, if you needed money today?",
+                opts: ["A plot of land", "Shares listed on the stock exchange", "A 5-year fixed deposit", "A stake in a friend's business"],
+                ans: 1,
+                gain: 10, loss: 4,
+                explainer: "Liquidity is how quickly an asset becomes cash without losing value. Listed shares sell in seconds; land or private business stakes can take months.",
+                takeaway: "Keep some of your wealth in liquid assets so you can access cash quickly in emergencies."
+            },
+            {
+                term: "Bull vs Bear Market",
+                cat: "Investing",
+                tier: "intermediate",
+                q: "Prices on the exchange have been falling steadily for months and investors are nervous. What is this called?",
+                opts: ["A bull market", "A bear market", "A stock split", "An IPO"],
+                ans: 1,
+                gain: 12, loss: 5,
+                explainer: "A bear market means falling prices and pessimism. A bull market means rising prices and confidence. Memory trick: a bull attacks upward; a bear swipes downward.",
+                takeaway: "Bear markets are when smart investors buy — prices are low. Bull markets are when most people wish they had bought earlier."
+            },
+            // === TIER 3: ADVANCED (Q12-15) ===
+            {
+                term: "Dividend Yield",
+                cat: "Investing",
+                tier: "advanced",
+                q: "A company share costs KSh 1,000 and pays a KSh 50 dividend per year. What is the dividend yield?",
+                opts: ["0.5%", "5%", "50%", "500%"],
+                ans: 1,
+                gain: 15, loss: 6,
+                explainer: "Dividend yield = annual dividend ÷ share price × 100. Here: 50 ÷ 1,000 × 100 = 5%. It tells you the 'income return' you get for holding the share.",
+                takeaway: "Dividend yield lets you compare the income from different shares — like comparing rent from different properties."
+            },
+            {
+                term: "P/E Ratio",
+                cat: "Investing",
+                tier: "advanced",
+                q: "A company's share price is KSh 150, and it earns KSh 10 per share. What is the P/E ratio?",
+                opts: ["1.5", "10", "15", "150"],
+                ans: 2,
+                gain: 16, loss: 6,
+                explainer: "P/E ratio = price ÷ earnings per share. 150 ÷ 10 = 15. It shows how many years of profit it takes to 'earn back' the share price.",
+                takeaway: "A high P/E means investors expect growth. A low P/E might mean a bargain — or a company in trouble. Always look deeper."
+            },
+            {
+                term: "Leverage",
+                cat: "Risk",
+                tier: "advanced",
+                q: "You use 2x leverage: KSh 1,000 of your own money controls KSh 2,000 of stock. The stock rises 10%. What's your actual return?",
+                opts: ["5%", "10%", "20%", "40%"],
+                ans: 2,
+                gain: 14, loss: 5,
+                explainer: "Leverage magnifies results. A 10% gain on KSh 2,000 = KSh 200 profit — that's 20% on your KSh 1,000. But the same leverage doubles your losses too.",
+                takeaway: "Leverage is a tool, not a shortcut. It multiplies gains AND losses equally. Never leverage more than you can afford to lose."
+            },
+            {
+                term: "Margin Call",
+                cat: "Risk",
+                tier: "advanced",
+                q: "You bought shares on margin, borrowing half the money. The share price drops 40%. What happens to your own capital?",
+                opts: ["Down 20%", "Down 40%", "Down 80%", "Untouched"],
+                ans: 2,
+                gain: 20, loss: 8,
+                explainer: "Margin amplifies losses. With 50% margin, a 40% price fall wipes 80% of your own stake. This is why brokers issue 'margin calls' — demanding more cash.",
+                takeaway: "Margin trading can destroy your capital faster than you think. Most professional traders use minimal margin."
+            }
+            ];
+
+            /*
+                GAME STATE
+                Variables that track the current state of the game.
+                These change as the player progresses.
+            */
+            let currentQ = 0; // which question we're on (0-14)
+            let score = 35000; // starting portfolio value
+            let scoreHistory = [35000]; // array of all scores (for the graph)
+            let correctCount = 0; // how many correct answers
+            let streak = 0; // current streak of correct answers
+            let answered = false; // has the current question been answered?
+            let chart = null; // the Chart.js instance
+
+            /* HELPER FUNCTIONS */
+
+            // Format a number with commas: 35000 → "35,000"
+            function fmt(n) {
+                return Math.round(n).toLocaleString('en-KE');
+            }
+
+            // Get the tier name and CSS class based on question number
+            function getTier(qIndex) {
+                if (qIndex < 5) return { name: 'Beginner', cls: 'tier-beginner' };
+                if (qIndex < 11) return { name: 'Intermediate', cls: 'tier-intermediate' };
+                return { name: 'Advanced', cls: 'tier-advanced' };
+            }
+
+            /*
+                CHART SETUP
+                Creates the Chart.js line chart that looks like
+                a share price graph.
+            */
+            function initChart() {
+                if (chart) { chart.destroy(); }
+                const ctx = document.getElementById('scoreChart').getContext('2d');
+
+                /*
+                    GRADIENT FILL — the "glow" under the line.
+                    
+                    We create a gradient that goes from green at the top
+                    (near the line) to transparent at the bottom.
+                    createLinearGradient(x1, y1, x2, y2) defines the
+                    direction: here from y=0 (top) to y=120 (bottom).
+                    
+                    addColorStop(position, color):
+                    0 = top of gradient → semi-transparent green
+                    0.5 = halfway → more transparent
+                    1 = bottom → fully transparent
+                    
+                    This creates the "glow" effect under the line.
+                */
+                const gradient = ctx.createLinearGradient(0, 0, 0, 120);
+                gradient.addColorStop(0, 'rgba(0, 230, 118, 0.25)');
+                gradient.addColorStop(0.5, 'rgba(0, 200, 83, 0.08)');
+                gradient.addColorStop(1, 'rgba(0, 200, 83, 0)');
+
+                chart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Start'],
+                        datasets: [{
+                            data: [35000],
+                            // Per-segment coloring: green up, red down
+                            segment: {
+                            borderColor: function(ctx) {
+                                return ctx.p0.parsed.y <= ctx.p1.parsed.y
+                                ? '#00E676' : '#FF5252';
+                            }
+                            },
+                            borderColor: '#00E676',
+                            borderWidth: 2.5,
+                            pointBackgroundColor: ['#00E676'],
+                            pointBorderColor: ['#00E676'],
+                            pointRadius: 4,
+                            pointHoverRadius: 6,
+                            /*
+                                FILL WITH GRADIENT: This paints the area under the line with our green-to-transparent gradient = the glow effect.
+                            */
+                            fill: true,
+                            backgroundColor: gradient,
+                            tension: 0.2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        animation: { duration: 400 },
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: 'rgba(15, 37, 24, 0.9)',
+                                borderColor: 'rgba(0, 200, 83, 0.3)',
+                                borderWidth: 1,
+                                titleColor: '#A8C5B0',
+                                bodyColor: '#FFFFFF',
+                                callbacks: {
+                                    label: function(ctx) {
+                                        return 'K ' + fmt(ctx.parsed.y);
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: { display: false },
+                            y: {
+                                display: true,
+                                grid: { color: 'rgba(0, 200, 83, 0.06)' },
+                                ticks: {
+                                    font: { size: 10 },
+                                    color: '#5A7A62',
+                                    maxTicksLimit: 4,
+                                    callback: v => fmt(v)
+                                }
+                            }
+                        }
+                    },
+                    plugins: [
+                        // Plugin 1: Dashed "start" line at 35,000
+                        {
+                            id: 'startLine',
+                            beforeDraw(chart) {
+                            const yScale = chart.scales.y;
+                            const y = yScale.getPixelForValue(35000);
+                            const ctx = chart.ctx;
+                            ctx.save();
+                            ctx.strokeStyle = 'rgba(0, 200, 83, 0.2)';
+                            ctx.lineWidth = 1;
+                            ctx.setLineDash([5, 5]);
+                            ctx.beginPath();
+                            ctx.moveTo(chart.chartArea.left, y);
+                            ctx.lineTo(chart.chartArea.right, y);
+                            ctx.stroke();
+                            ctx.restore();
+                            }
+                        },
+
+                        /*
+                            Plugin 2: FLOATING SCORE LABELS
+                            
+                            Draws two things on top of the chart:
+                            1. Small "+4" or "-2" labels above/below each point
+                            (green for gains, red for losses)
+                            2. A highlighted badge at the LAST point showing
+                            the current total score (e.g. "43,750")
+                            
+                            afterDraw runs AFTER the chart is fully rendered,
+                            so our labels sit on top of everything.
+                        */
+                        {
+                            id: 'scoreLabels',
+                            afterDraw(chartInstance) {
+                                const dataset = chartInstance.data.datasets[0];
+                                const meta = chartInstance.getDatasetMeta(0);
+                                const ctx = chartInstance.ctx;
+                                const data = dataset.data;
+
+                                ctx.save();
+
+                                // Draw +/- delta labels at each point (skip "Start")
+                                for (let i = 1; i < data.length; i++) {
+                                    const point = meta.data[i];
+                                    if (!point) continue;
+
+                                    const x = point.x;
+                                    const y = point.y;
+                                    const delta = data[i] - data[i - 1];
+                                    const isGain = delta >= 0;
+
+                                    // Format: "+4" or "-2"
+                                    const label = isGain ? '+' + delta : '' + delta;
+
+                                    // Position label above for gains, below for losses
+                                    const labelY = isGain ? y - 14 : y + 18;
+
+                                    // Draw rounded rectangle background
+                                    ctx.font = 'bold 9px -apple-system, sans-serif';
+                                    const textWidth = ctx.measureText(label).width;
+                                    const padX = 4;
+                                    const padY = 2;
+                                    const rectW = textWidth + padX * 2;
+                                    const rectH = 14;
+                                    const rectX = x - rectW / 2;
+                                    const rectY = labelY - rectH / 2;
+
+                                    // Background pill
+                                    ctx.fillStyle = isGain
+                                    ? 'rgba(0, 230, 118, 0.9)'
+                                    : 'rgba(255, 82, 82, 0.9)';
+                                    ctx.beginPath();
+                                    ctx.roundRect(rectX, rectY, rectW, rectH, 3);
+                                    ctx.fill();
+
+                                    // Text
+                                    ctx.fillStyle = isGain ? '#003d00' : '#fff';
+                                    ctx.textAlign = 'center';
+                                    ctx.textBaseline = 'middle';
+                                    ctx.fillText(label, x, labelY);
+                                }
+
+                                /*
+                                    CURRENT SCORE BADGE - at the last point.
+                                    A larger green badge showing "43,750" so the
+                                    player always sees their current position.
+                                */
+                                if (data.length > 0) {
+                                    const lastIdx = data.length - 1;
+                                    const lastPoint = meta.data[lastIdx];
+                                    if (lastPoint) {
+                                    const x = lastPoint.x;
+                                    const y = lastPoint.y;
+                                    const scoreText = fmt(data[lastIdx]);
+
+                                    ctx.font = 'bold 11px -apple-system, sans-serif';
+                                    const tw = ctx.measureText(scoreText).width;
+                                    const bw = tw + 12;
+                                    const bh = 20;
+
+                                    // Position to the right of the point
+                                    const bx = x + 8;
+                                    const by = y - bh / 2;
+
+                                    // Green badge background
+                                    ctx.fillStyle = '#00C853';
+                                    ctx.beginPath();
+                                    ctx.roundRect(bx, by, bw, bh, 4);
+                                    ctx.fill();
+
+                                    // Score text in black
+                                    ctx.fillStyle = '#000';
+                                    ctx.textAlign = 'left';
+                                    ctx.textBaseline = 'middle';
+                                    ctx.fillText(scoreText, bx + 6, y);
+                                    }
+                                }
+
+                                ctx.restore();
+                            }
+                        }
+                    ]
+                });
+            }
+
+            /*
+            UPDATE CHART — adds a new point with correct color.
+            Each point keeps its own color. Segment styling
+            handles the line color between points automatically.
+            */
+            function updateChart(newScore, wasCorrect) {
+                const data = chart.data.datasets[0];
+                
+                chart.data.labels.push('Q' + (currentQ + 1));
+                data.data.push(newScore);
+                
+                const prevScore = scoreHistory[scoreHistory.length - 2];
+                const pointColor = newScore >= prevScore ? '#00E676' : '#FF5252';
+                data.pointBackgroundColor.push(pointColor);
+                data.pointBorderColor.push(pointColor);
+                
+                chart.update();
+            }
+
+            /* SCREEN SWITCHING */
             function showScreen(screenId) {
                 document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
                 document.getElementById(screenId).classList.add('active');
             }
-        
+
+            /* START GAME */
             function startGame() {
+                // Reset all state
+                currentQ = 0;
+                score = 35000;
+                scoreHistory = [35000];
+                correctCount = 0;
+                streak = 0;
+                answered = false;
+
                 showScreen('game-screen');
+                initChart();
+                loadQuestion();
+            }
+
+            /*
+                LOAD QUESTION
+                Reads the current question from QUESTIONS array and updates all the UI elements.
+            */
+            function loadQuestion() {
+                answered = false;
+                const q = QUESTIONS[currentQ];
+                const tier = getTier(currentQ);
+                const letters = ['A', 'B', 'C', 'D'];
+
+                // Show question content, hide explainer panel
+                document.getElementById('question-content').classList.remove('hidden');
+                document.getElementById('explainer-panel').classList.remove('visible');
+
+                // Update header
+                document.getElementById('round-num').textContent =
+                    'ROUND ' + (currentQ + 1) + '/15';
+                const tierEl = document.getElementById('round-tier');
+                tierEl.textContent = tier.name;
+                tierEl.className = 'header-round-tier ' + tier.cls;
+
+                // Update score displays
+                document.getElementById('score-display').textContent = fmt(score);
+                document.getElementById('portfolio-value').textContent = 'K ' + fmt(score);
+
+                // Update question card
+                document.getElementById('q-num').textContent = 'Question ' + (currentQ + 1);
+                document.getElementById('q-cat').textContent = q.cat;
+                document.getElementById('q-text').textContent = q.q;
+
+                // Update streak badge
+                const streakBadge = document.getElementById('streak-badge');
+                if (streak >= 2) {
+                    streakBadge.classList.add('visible');
+                    document.getElementById('streak-count').textContent = 'x' + streak;
+                } else {
+                    streakBadge.classList.remove('visible');
+                }
+
+                // Generate option buttons
+                const container = document.getElementById('options-list');
+                container.innerHTML = '';
+                q.opts.forEach((opt, i) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'option-btn';
+                    btn.innerHTML =
+                    '<span class="option-letter">' + letters[i] + '</span>' +
+                    '<span class="option-text">' + opt + '</span>';
+                    btn.onclick = () => selectAnswer(i);
+                    container.appendChild(btn);
+                });
+            }
+
+            /*
+                SELECT ANSWER — NEW FLOW
+                1. Player taps an option
+                2. Options flash green/red briefly (500ms)
+                3. Question content hides, explainer panel slides in
+            */
+            function selectAnswer(chosen) {
+                if (answered) return;
+                answered = true;
+
+                const q = QUESTIONS[currentQ];
+                const correct = chosen === q.ans;
+                const letters = ['A', 'B', 'C', 'D'];
+
+                // Calculate score change
+                let delta;
+                if (correct) {
+                    streak++;
+                    correctCount++;
+                    const streakBonus = streak >= 3 ? 5 : 0;
+                    delta = q.gain + streakBonus;
+                } else {
+                    streak = 0;
+                    delta = -q.loss;
+                }
+
+                score = Math.max(0, score + delta);
+                scoreHistory.push(score);
+
+                // Update scores
+                document.getElementById('score-display').textContent = fmt(score);
+                document.getElementById('portfolio-value').textContent = 'K ' + fmt(score);
+
+                // Update streak badge
+                const streakBadge = document.getElementById('streak-badge');
+                if (streak >= 2) {
+                    streakBadge.classList.add('visible');
+                    document.getElementById('streak-count').textContent = 'x' + streak;
+                } else {
+                    streakBadge.classList.remove('visible');
+                }
+
+                // Flash correct/wrong on options
+                const btns = document.querySelectorAll('.option-btn');
+                btns.forEach((btn, i) => {
+                    if (i === q.ans) btn.classList.add('correct');
+                    else if (i === chosen && !correct) btn.classList.add('wrong');
+                    else btn.classList.add('disabled');
+                });
+
+                // Update chart
+                updateChart(score, correct);
+
+                // After a brief pause, switch to explainer panel
+                setTimeout(() => {
+                    // Hide question content
+                    document.getElementById('question-content').classList.add('hidden');
+
+                    // Populate explainer panel
+                    const resultIcon = document.getElementById('result-icon');
+                    const resultText = document.getElementById('result-text');
+                    const resultPoints = document.getElementById('result-points');
+
+                    if (correct) {
+                    resultIcon.className = 'result-icon correct';
+                    resultIcon.textContent = '✓';
+                    resultText.className = 'result-text correct';
+                    resultText.textContent = 'Correct!';
+                    resultPoints.className = 'result-points correct';
+                    resultPoints.textContent = '+' + delta + ' POINTS';
+                    } else {
+                    resultIcon.className = 'result-icon wrong';
+                    resultIcon.textContent = '✗';
+                    resultText.className = 'result-text wrong';
+                    resultText.textContent = 'Wrong!';
+                    resultPoints.className = 'result-points wrong';
+                    resultPoints.textContent = delta + ' POINTS';
+                    }
+
+                    // Show correct answer
+                    document.getElementById('correct-letter').textContent = letters[q.ans];
+                    document.getElementById('correct-text').textContent = q.opts[q.ans];
+
+                    // Show explanation and takeaway
+                    document.getElementById('explanation-text').textContent = q.explainer;
+                    document.getElementById('takeaway-text').textContent = q.takeaway;
+
+                    // Update next button text
+                    document.getElementById('next-btn').textContent =
+                    currentQ + 1 < QUESTIONS.length
+                        ? 'Next question  →'
+                        : 'See your results  →';
+
+                    // Show explainer panel with slide animation
+                    document.getElementById('explainer-panel').classList.add('visible');
+
+                }, 600);  // 600ms delay — enough to see the answer flash
+            }
+
+            function nextQuestion() {
+                currentQ++;
+                if (currentQ >= QUESTIONS.length) {
+                    showScreen('end-screen');
+                } else {
+                    loadQuestion();
+                }
             }
         </script>
     </body>
